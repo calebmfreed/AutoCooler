@@ -13,6 +13,7 @@
 @end
 
 @implementation TripViewViewController
+@synthesize lats, longs;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = NO;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -44,23 +46,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.lats count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(indexPath.row < _numberSteps)
+    {
+        cell.textLabel.text = [NSString stringWithFormat:@"S:%li - %@, %@",(long)indexPath.row, lats[indexPath.row], longs[indexPath.row]];
+    }
+    else{
+        cell.textLabel.text = [NSString stringWithFormat:@"Arrange Step:%li - %@, %@",(long)indexPath.row, lats[indexPath.row], longs[indexPath.row]];
+
+    }
     // Configure the cell...
     
     return cell;

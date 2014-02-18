@@ -10,4 +10,9 @@
 
 @interface TripViewViewController : UITableViewController
 
+
+@property (nonatomic, strong) NSMutableArray * longs;
+@property (nonatomic, strong) NSMutableArray * lats;
+@property int numberSteps;
+
 @end

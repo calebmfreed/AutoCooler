@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		363DED3518B17C2200B59AC7 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 363DED3318B17C2200B59AC7 /* BLE.m */; };
+		367DEDFA1899D968004C48EA /* TripViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 367DEDF91899D968004C48EA /* TripViewViewController.m */; };
 		36805C521856E9FC00866E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36805C511856E9FC00866E6E /* Foundation.framework */; };
 		36805C541856E9FC00866E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36805C531856E9FC00866E6E /* CoreGraphics.framework */; };
 		36805C561856E9FC00866E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36805C551856E9FC00866E6E /* UIKit.framework */; };
@@ -57,6 +59,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		363DED3218B17C2200B59AC7 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
+		363DED3318B17C2200B59AC7 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
+		363DED3418B17C2200B59AC7 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
+		367DEDF81899D968004C48EA /* TripViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripViewViewController.h; sourceTree = "<group>"; };
+		367DEDF91899D968004C48EA /* TripViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripViewViewController.m; sourceTree = "<group>"; };
 		36805C4E1856E9FC00866E6E /* AutoCooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoCooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36805C511856E9FC00866E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36805C531856E9FC00866E6E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -148,6 +155,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		363DED3118B17C2200B59AC7 /* BLE */ = {
+			isa = PBXGroup;
+			children = (
+				363DED3218B17C2200B59AC7 /* BLE.h */,
+				363DED3318B17C2200B59AC7 /* BLE.m */,
+				363DED3418B17C2200B59AC7 /* BLEDefines.h */,
+			);
+			path = BLE;
+			sourceTree = "<group>";
+		};
 		36805C451856E9FC00866E6E = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +188,7 @@
 		36805C501856E9FC00866E6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				363DED3118B17C2200B59AC7 /* BLE */,
 				36805CA01856EBCE00866E6E /* SystemConfiguration.framework */,
 				36805C9E1856EBAD00866E6E /* QuartzCore.framework */,
 				36805C9C1856EB9900866E6E /* OpenGLES.framework */,
@@ -201,6 +219,8 @@
 				36805C631856E9FC00866E6E /* Main.storyboard */,
 				36805C661856E9FC00866E6E /* ACViewController.h */,
 				36805C671856E9FC00866E6E /* ACViewController.m */,
+				367DEDF81899D968004C48EA /* TripViewViewController.h */,
+				367DEDF91899D968004C48EA /* TripViewViewController.m */,
 				36805C691856E9FC00866E6E /* Images.xcassets */,
 				36805C581856E9FC00866E6E /* Supporting Files */,
 			);
@@ -362,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36805CD31856F6AA00866E6E /* AFHTTPRequestOperation.m in Sources */,
+				367DEDFA1899D968004C48EA /* TripViewViewController.m in Sources */,
 				36805C621856E9FC00866E6E /* ACAppDelegate.m in Sources */,
 				36805CD41856F6AA00866E6E /* AFHTTPRequestOperationManager.m in Sources */,
 				36805CD61856F6AA00866E6E /* AFNetworkReachabilityManager.m in Sources */,
@@ -371,6 +392,7 @@
 				36805CD51856F6AA00866E6E /* AFHTTPSessionManager.m in Sources */,
 				36805CD91856F6AA00866E6E /* AFURLRequestSerialization.m in Sources */,
 				36805CDB1856F6AA00866E6E /* AFURLSessionManager.m in Sources */,
+				363DED3518B17C2200B59AC7 /* BLE.m in Sources */,
 				36805C681856E9FC00866E6E /* ACViewController.m in Sources */,
 				36805C5E1856E9FC00866E6E /* main.m in Sources */,
 			);
@@ -591,6 +613,7 @@
 				36805C821856E9FC00866E6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36805C831856E9FC00866E6E /* Build configuration list for PBXNativeTarget "AutoCoolerTests" */ = {
 			isa = XCConfigurationList;
@@ -599,6 +622,7 @@
 				36805C851856E9FC00866E6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
