@@ -107,7 +107,7 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
 //    Add the reconizer to the view
     [mapView_ addGestureRecognizer:longPress];
 // Adds the instruction label
-    self.navigationItem.title = @"Waiting on location...";
+    self.navigationItem.title = @"Waiting for BT connection...";
 //    Adds the clear data points button
 //    UIButton * clear = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 //    [clear addTarget:self action:@selector(clearDataPoints) forControlEvents:UIControlEventTouchDown];
@@ -177,8 +177,9 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
     
     for(int i = 0; i < returnedStates; i++)
     {
-        [self BLESend:[lats objectAtIndex:i]];
-        [self BLESend:[longs objectAtIndex:i]];
+        NSLog(@"In loop for sending: %@", [lats objectAtIndex:i]);
+        [self BLESend:[NSString stringWithFormat:@"%@",[lats objectAtIndex:i]]];
+        [self BLESend:[NSString stringWithFormat:@"%@",[longs objectAtIndex:i]]];
     }
 }
 
@@ -212,7 +213,9 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
     
     
 
-    [NSTimer scheduledTimerWithTimeInterval:(float)3.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+    self.navigationItem.title = @"Waiting on car location...";
+
 }
 
 - (void) stepsButtonPressed
@@ -227,7 +230,7 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
     retrieveState = 0;
     [longs removeAllObjects];
     [lats removeAllObjects];
-    self.navigationItem.title = @"Waiting on location...";
+    self.navigationItem.title = @"Waiting on car location...";
     origin = @"";
     destination = @"";
 }
@@ -304,18 +307,19 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
 
 - (void)BLESend:(NSString *)STOS
 {
+    
     NSString *s;
     NSData *d;
-    
+    NSLog(@"beginning blesend");
     if (STOS.length > 16)
         s = [STOS substringToIndex:16];
     else
         s = STOS;
-    
+    NSLog(@"Middle BLESend");
     s = [NSString stringWithFormat:@"%@\n", s];
     d = [s dataUsingEncoding:NSUTF8StringEncoding];
-    //NSLog(@"DataHex:%i", [s characterAtIndex: 7]);
-    NSLog(@"Sent: %@",s);
+    NSLog(@"Sent: %@ Data: %@",s,d);
+    
     
     [ble write:d];
 }
@@ -327,36 +331,49 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
     NSString *s = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
     double thing = [s doubleValue];
     NSLog(@"Reveived int value: %f, string is: %@", thing, s);
+    NSLog(@"Retrieve State = %i", retrieveState);
     [self receiveStateCheck:s];
 }
 
 -(void) receiveStateCheck:(NSString *) received
 {
+//    NSLog(@"Received: %@",received);
+//    NSUInteger length = [received length];
+//    received = [received stringByReplacingOccurrencesOfString:@"\n" withString:@"" options:0 range:NSMakeRange(0, length)];
+
     //    Get the first part of the gps coordinate from the car
     if(retrieveState == 0)
     {
+        NSLog(@"Received: %@",received);
+        NSUInteger length = [received length];
+        received = [received stringByReplacingOccurrencesOfString:@"\n" withString:@"" options:0 range:NSMakeRange(0, length)];
+        NSLog(@"Received after: %@",received);
+
         //      put it in the origin nsstring
         origin = [NSString stringWithFormat:@"%@",received];
+        NSLog(@"Origin: %@", origin);
+        NSArray* split = [received componentsSeparatedByString: @","];
+
         //      also the lats array
-        [lats addObject:[NSString stringWithFormat:@"%@",received]];
-        //        Next state for next received
-        retrieveState = 1;
-    }
-    //    Get the second part of the gps coordinate, the longitude
-    else if(retrieveState == 1)
-    {
-        //        Put the long in the origin string
-        [origin stringByAppendingString:[NSString stringWithFormat:@",%@",received]];
+        [lats addObject:[split firstObject]];
         //        put in the long array
-        [longs addObject:[NSString stringWithFormat:@",%@",received]];
+        [longs addObject:[split lastObject]];
         //        next state
-        retrieveState = 2;
-        state = 2;
         //        Turn it into a coordinate and make the marker
         CLLocationCoordinate2D orginLocation = CLLocationCoordinate2DMake([[lats objectAtIndex:0] doubleValue], [[longs objectAtIndex:0] doubleValue]);
         GMSMarker * org = [GMSMarker markerWithPosition:orginLocation];
         org.title = [NSString stringWithFormat:@"End: %f,%f",orginLocation.latitude,orginLocation.longitude];
         org.map = mapView_;
+        [markers addObject:org];
+
+        //        Next state for next received
+        state = 1;
+        retrieveState = 1;
+    }
+    //    Get the second part of the gps coordinate, the longitude
+    else if(retrieveState == 1)
+    {
+        NSLog(@"Shit");
     }
     //    Then something else sent or recieved
     else if(retrieveState == 2)

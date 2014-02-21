@@ -44,6 +44,7 @@ static int rssi = 0;
 
 -(void) write:(NSData *)d
 {
+    NSLog(@"write func");
     CBUUID *uuid_service = [CBUUID UUIDWithString:@RBL_SERVICE_UUID];
     CBUUID *uuid_char = [CBUUID UUIDWithString:@RBL_CHAR_RX_UUID];
     
@@ -140,7 +141,7 @@ static int rssi = 0;
 -(void) writeValue:(CBUUID *)serviceUUID characteristicUUID:(CBUUID *)characteristicUUID p:(CBPeripheral *)p data:(NSData *)data
 {
     CBService *service = [self findServiceFromUUID:serviceUUID p:p];
-    
+    NSLog(@"Writevalue func");
     if (!service)
     {
         NSLog(@"Could not find service with UUID %@ on peripheral with UUID %@",
